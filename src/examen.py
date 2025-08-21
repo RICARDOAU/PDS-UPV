@@ -55,33 +55,35 @@ def analizar_componentes_frecuenciales(senal, frecuencia_muestreo, nombre_senal,
 def examen_p1():
     """
     Primera parte del examen: Análisis de señal modulada en amplitud
-    con parámetros optimizados para mejor visualización espectral
+    con los parámetros especificados x(t)=[1+ m*cos(2π*fm*t)]sin(2π*fc*t)
     """
     print("="*65)
     print("EXAMEN PARTE 1: ANÁLISIS DE SEÑAL MODULADA EN AMPLITUD")
     print("="*65)
     
-    # Parámetros de la señal optimizados
-    freq_moduladora = 1.8    # Hz (frecuencia de modulación)
-    freq_portadora = 15.0    # Hz (frecuencia portadora)
-    indice_modulacion = 0.7  # Índice de modulación
-    freq_muestreo = 120.0    # Hz (frecuencia de muestreo)
-    tiempo_total = 7.5       # segundos (duración)
+    # Parámetros de la señal según especificación
+    fm = 0.5     # Hz (frecuencia de modulación)
+    fc = 8.0     # Hz (frecuencia portadora)
+    m = 0.5      # Índice de modulación
     
-    # Generar señal modulada con mayor resolución
+    # Parámetros de adquisición
+    freq_muestreo = 80.0    # Hz (frecuencia de muestreo)
+    tiempo_total = 10.0     # segundos (duración)
+    
+    # Generar señal modulada
     puntos_muestreo = int(freq_muestreo * tiempo_total)
     t = np.linspace(0, tiempo_total, puntos_muestreo, endpoint=False)
     
-    # Crear señal AM con componentes bien definidas
-    envolvente = 1 + indice_modulacion * np.cos(2 * np.pi * freq_moduladora * t)
-    senal_modulada = envolvente * np.sin(2 * np.pi * freq_portadora * t)
+    # Crear señal AM según la expresión especificada
+    envolvente = 1 + m * np.cos(2 * np.pi * fm * t)
+    senal_modulada = envolvente * np.sin(2 * np.pi * fc * t)
     
-    # Analizar espectro con mayor sensibilidad
+    # Analizar espectro
     frecuencias, magnitudes, resolucion = analizar_componentes_frecuenciales(
-        senal_modulada, freq_muestreo, "Señal modulada en amplitud", 0.005)
+        senal_modulada, freq_muestreo, "Señal modulada en amplitud", 0.001)
     
-    # Visualizar resultados con etiquetas mejoradas
-    expr_mat = f'[1+{indice_modulacion}cos(2π{freq_moduladora}t)]·sin(2π{freq_portadora}t)'
+    # Visualizar resultados
+    expr_mat = f'[1+{m}cos(2π{fm}t)]·sin(2π{fc}t)'
     continuous_plotter(t, senal_modulada, f'Señal Modulada AM: {expr_mat}', 
                        "Dominio Temporal", "Tiempo (s)", "Amplitud (V)")
     
@@ -91,6 +93,7 @@ def examen_p1():
     print("\n" + "="*65)
     print("CONCLUSIÓN: La DFT revela claramente las bandas laterales")
     print("características de la modulación AM alrededor de la portadora")
+    print(f"Portadora: {fc} Hz, Bandas laterales: {fc-fm:.1f} Hz y {fc+fm:.1f} Hz")
 
 def examen_p2():
     """
