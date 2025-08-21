@@ -223,3 +223,54 @@ OBSERVACIONES
 El voltaje de referencia (Vref) está configurado en 5 V.
 La señal de salida del DAC se grafica en forma de escalera, dependiendo de los niveles.
 Puedes modificar el valor de Vref directamente en el código para adaptarlo a tu circuito real.
+==================================================================================================================================
+Análisis DFT - Transformada de Fourier Discreta
+📌 Descripción
+Análisis espectral de señales usando una implementación propia de la DFT para identificar componentes frecuenciales en señales moduladas y con ruido.
+from analisis_fourier import Transformada_Fourier_Discreta
+
+# Ejecutar análisis completo
+Transformada_Fourier_Discreta()
+🔧 Funcionalidades
+DFT propia: Implementación manual de la transformada
+
+Análisis espectral: Detección automática de picos frecuenciales
+
+Señales de prueba:
+
+Señal modulada AM
+
+Señal con ruido sinusoidal
+
+Visualización: 6 gráficas de tiempo y frecuencia
+⚙️ Parámetros Principales
+# Señal modulada
+fm = 0.5    # Frecuencia moduladora
+fc = 8.0    # Frecuencia portadora
+
+# Señal con ruido
+frecuencias = [8.0, 20.0]  # Componentes principales
+ruido_frec = 35.0          # Ruido a 35Hz
+📊 Output Esperado
+SEÑAL MODULADA AM: Δf = 0.1000 Hz
+Picos:
+  1. 8.00 Hz - Amplitud: 0.5000
+  2. 7.50 Hz - Amplitud: 0.1250
+  3. 8.50 Hz - Amplitud: 0.1250
+
+SEÑAL CON RUIDO: Δf = 0.0427 Hz
+Picos:
+  1. 8.00 Hz - Amplitud: 0.5000
+  2. 35.00 Hz - Amplitud: 0.1500
+  3. 20.00 Hz - Amplitud: 0.2500
+  📦 Dependencias
+  pip install numpy matplotlib
+  🎯 Aplicaciones
+Identificación de componentes frecuenciales
+
+Detección de ruido en señales
+
+Análisis de modulación AM
+El codigo funciona desde main.py eligiendo que parte del codigo quieres que se ejute:
+    main.py examen parte1: Aplicacion de la DFT a una señal AM y su analisis completo.
+    main.py examen parte2: Analisis y comparación de la señal original con su señal perturbada.
